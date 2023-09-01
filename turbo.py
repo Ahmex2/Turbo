@@ -2,7 +2,7 @@ import argparse
 import logging
 import subprocess
 
-# Define the paths for the Redmi Note 9S
+# Define the paths 
 WINDOW_ANIMATION_SCALE_PATH = "/settings/global/window_animation_scale"
 TRANSITION_ANIMATION_SCALE_PATH = "/settings/global/transition_animation_scale"
 ANIMATOR_DURATION_SCALE_PATH = "/settings/global/animator_duration_scale"
