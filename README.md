@@ -1,96 +1,70 @@
-#Turbo.py - Device Optimization Script
 
-Turbo.py is a Python script designed to optimize various settings and configurations on Android devices. It leverages the Android Debug Bridge (ADB) to execute commands and make changes to system settings, providing users with enhanced performance, customization, and power management options.
+# Android Device Optimization for Gaming
 
-## Features
+## Overview
 
-Turbo.py offers the following key features:
+This project provides a Python script for optimizing Android devices for gaming. It includes various optimizations such as disabling system animations, setting CPU governors, adjusting display settings, and more. Additionally, it incorporates fast charging optimization for enhanced gaming experiences.
 
--**Root Access Checking**: The script verifies if it is being executed with root privileges to ensure that it can make system-level changes.
-
--**ADB Connectivity**: Turbo.py checks the connectivity of the device via ADB, ensuring that the device is accessible for making changes.
-
--**Dependency Installation**: The script automatically installs the necessary dependencies, including Python, Git, tsu, and adb, to ensure a smooth optimization process.
-
--**USB Debugging**: Turbo.py enables USB debugging on the device, allowing for advanced interactions with the Android system.
-
--**Installation of Turbo Script**: The script installs the Turbo script, which provides additional optimization features.
-
--**System Animations**: Turbo.py disables system animations to improve device responsiveness.
-
-**Charging Speed**: The script sets the charging speed to maximum when the device is connected and charging.
-
- **CPU Governor**: Turbo.py sets the CPU governor to "performance" mode, optimizing the device's processing capabilities.
-
-**Memory Optimization**: The script optimizes memory by dropping caches, improving overall system performance.
-
-**Device Customization**: Turbo.py allows users to customize device settings such as screen resolution and display brightness.
-
-**Camera Settings**: The script optimizes camera settings by disabling forced camera sounds.
-
-**Audio Settings**: Turbo.py provides options to optimize audio settings for speakers and headphones, including bass boost, treble boost, and equalizer settings.
-
-**GPS Settings**: The script allows users to optimize GPS settings for location accuracy or battery usage.
-
-**Security Settings**: Turbo.py enables users to optimize security settings, including lock screen and app permissions.
-
- **Accessibility Settings**: The script offers options to optimize accessibility settings such as display size and font size.
-
-**Power Management**: Turbo.py provides optimizations for power management settings, including battery saver mode and sleep mode.
-
-**Display Settings**: The script allows users to optimize display settings, including night mode, blue light filter, and dark theme.
-
-## Usage
-
-To use Turbo.py, follow these steps:
-
-Ensure that your Android device is connected to the computer via USB.
-
- Make sure you have root access on your device.
-
-Install the necessary dependencies by running the `install_dependencies()` function.
-
-Enable USB debugging by executing the `enable_usb_debugging()` function.
-
-Install the Turbo script by running the `install_turbo_script()` function.
-
- Customize device settings, such as screen resolution or display brightness, using the `customize_device_settings()` function.
-
-Optimize various settings, such as camera, audio, GPS, security, accessibility, power management, and display, using the respective functions.
-
-1. Enjoy the optimized performance and customized experience on your Android device.
-
-## Requirements
-
-Turbo.py has the following requirements:
-
-- Python
-- Git
-- tsu
-- ADB (Android Debug Bridge)
-
-Ensure that these dependencies are installed before using Turbo.py.
+Author: Ahmed Mohamed
 
 ## Disclaimer
 
-Turbo.py is provided as-is without any warranty. Please use this script responsibly and at your own risk. The author and contributors of Turbo.py are not liable for any damages or issues caused by the usage of this script.
+This project is intended for educational and experimental purposes. By using this script, you acknowledge the following:
 
-## Contribution
+- The script may involve changes to system settings that could affect the performance and behavior of your Android device.
 
-Contributions to Turbo.py are welcome! If you have any ideas, suggestions, or bug reports, please submit them via GitHub issues or create a pull request.
+- While the script aims to enhance gaming experiences, results may vary depending on the device and configuration.
+
+- Fast charging optimizations may have implications on battery longevity. Use them at your discretion.
+
+- The author and contributors are not responsible for any potential damage or adverse effects caused by using this script.
+
+## Getting Started
+
+To use this script to optimize your Android device for gaming, follow these steps:
+
+1. **Install Dependencies:** Ensure you have the necessary dependencies installed on your device.
+
+   ```shell
+   # Example installation command for required dependencies
+   sudo apt install python git tsu
+   ```
+
+2. **Enable USB Debugging:** Enable USB debugging on your Android device. This is necessary for certain optimizations.
+
+3. **Install Turbo Script:** The script uses the Turbo script for some optimizations. Install it using the following commands:
+
+   ```shell
+   git clone https://github.com/fkpwolf/turbo
+   chmod +x ./turbo/turbo.sh
+   tsudo ./turbo/turbo.sh
+   ```
+
+4. **Run the Optimization Script:** Execute the optimization script with the desired settings:
+
+   ```shell
+   python optimize_android.py -v
+   ```
+
+5. **Customize Settings (Optional):** Depending on your preferences, you can customize settings such as screen brightness and app background data restrictions within the script.
+
+6. **Use with Caution:** Be mindful that certain optimizations, especially fast charging, may have an impact on your device's battery life.
 
 ## License
 
-Turbo.py is licensed under the [MIT License](https://opensource.org/licenses/MIT). Feel free to modify, distribute, and use this script according to the terms of the license.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contributions
+
+Contributions to this project are welcome. If you encounter issues or have suggestions for improvements, please open an [issue](https://github.com/yourusername/yourproject/issues) or submit a [pull request](https://github.com/yourusername/yourproject/pulls).
 
 ## Acknowledgments
 
-Turbo.py was inspired by the need for a comprehensive optimization script for Android devices. We would like to express our gratitude to the open-source community for their contributions and the developers of the tools and libraries used in this project.
+- Special thanks to the open-source community for providing valuable resources and tools.
 
-______________________________________________________________________
+---
 
-Thank you for using Turbo.py! 
-If you have any questions or need assistance, please don't hesitate to reach out.
+**Disclaimer:** This project is provided as-is, and the author and contributors assume no liability for any potential issues or damages caused by using this script. Use it at your own risk and discretion.
+```
 
-Thank you for reading  
-Author : Ahmed Sanad <3
+thank you for reading 🙏🏻 Eng/Ahmed
