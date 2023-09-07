@@ -1,70 +1,67 @@
 
-# Android Device Optimization for Gaming
 
-## Overview
+```markdown
+# Android Device Optimization and Media Capture Script
 
-This project provides a Python script for optimizing Android devices for gaming. It includes various optimizations such as disabling system animations, setting CPU governors, adjusting display settings, and more. Additionally, it incorporates fast charging optimization for enhanced gaming experiences.
+**Author:** Ahmed
 
-Author: Ahmed Mohamed
+This Python script is designed to optimize the performance of your Android device and capture media (photos or videos) using the device's camera. It offers a convenient way to enhance your Android experience and streamline media capture.
 
-## Disclaimer
+## Features
 
-This project is intended for educational and experimental purposes. By using this script, you acknowledge the following:
+- **Performance Optimization:** The script optimizes your Android device for smoother performance by adjusting various settings, including animations, CPU governor, memory, display, and more.
 
-- The script may involve changes to system settings that could affect the performance and behavior of your Android device.
+- **USB Debugging:** It enables USB debugging, a necessary step for many advanced Android operations.
 
-- While the script aims to enhance gaming experiences, results may vary depending on the device and configuration.
+- **Turbo Script Installation:** The script installs the Turbo script, which can further enhance device performance.
 
-- Fast charging optimizations may have implications on battery longevity. Use them at your discretion.
+- **Camera Capture:** Capture media using the device's camera. You can choose to capture photos or videos.
 
-- The author and contributors are not responsible for any potential damage or adverse effects caused by using this script.
+- **Additional Settings:** The script allows you to adjust screen brightness, disable background app refresh, enable battery saver mode, and restrict app background data.
 
-## Getting Started
+- **Game Mode:** It enables the Android Game Mode for an optimized gaming experience.
 
-To use this script to optimize your Android device for gaming, follow these steps:
+## Usage
 
-1. **Install Dependencies:** Ensure you have the necessary dependencies installed on your device.
+1. Ensure that your Android device is connected to your computer via USB debugging mode.
 
-   ```shell
-   # Example installation command for required dependencies
-   sudo apt install python git tsu
+2. Run the script with Python by executing the following command in your terminal:
+
+   ```bash
+   python script_name.py [-v] [-m {photo,video}]
    ```
 
-2. **Enable USB Debugging:** Enable USB debugging on your Android device. This is necessary for certain optimizations.
+   - Use the `-v` or `--verbose` flag for verbose logging.
+   - Use the `-m` or `--media` flag to specify whether to capture a 'photo' or 'video' (default is 'photo').
 
-3. **Install Turbo Script:** The script uses the Turbo script for some optimizations. Install it using the following commands:
+3. Follow the on-screen prompts as the script optimizes your device and captures media.
 
-   ```shell
-   git clone https://github.com/fkpwolf/turbo
-   chmod +x ./turbo/turbo.sh
-   tsudo ./turbo/turbo.sh
-   ```
+## Dependencies
 
-4. **Run the Optimization Script:** Execute the optimization script with the desired settings:
+Before using the script, ensure you have the following dependencies installed on your computer:
 
-   ```shell
-   python optimize_android.py -v
-   ```
+- Python
+- Git
+- tsu (Android root access)
+- adb (Android Debug Bridge)
 
-5. **Customize Settings (Optional):** Depending on your preferences, you can customize settings such as screen brightness and app background data restrictions within the script.
+You can install these dependencies using the following command:
 
-6. **Use with Caution:** Be mindful that certain optimizations, especially fast charging, may have an impact on your device's battery life.
+```bash
+pkg install python git tsu adb
+```
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Contributions
-
-Contributions to this project are welcome. If you encounter issues or have suggestions for improvements, please open an [issue](https://github.com/yourusername/yourproject/issues) or submit a [pull request](https://github.com/yourusername/yourproject/pulls).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- Special thanks to the open-source community for providing valuable resources and tools.
+Special thanks to the Android community and contributors for inspiration and useful tools.
 
----
+Feel free to contribute to this project or report any issues you encounter. Enjoy optimizing your Android device and capturing great moments!
 
-**Disclaimer:** This project is provided as-is, and the author and contributors assume no liability for any potential issues or damages caused by using this script. Use it at your own risk and discretion.
 ```
 
-thank you for reading 🙏🏻 Eng/Ahmed
+Please make sure to replace `script_name.py` with the actual name of your Python script. You can also replace the `LICENSE` section with the appropriate license information if needed.
+
