@@ -1,6 +1,4 @@
 
-
-```markdown
 # Android Device Optimization and Media Capture Script
 
 **Author:** Ahmed
@@ -27,9 +25,9 @@ This Python script is designed to optimize the performance of your Android devic
 
 2. Run the script with Python by executing the following command in your terminal:
 
-   ```bash
+   
    python script_name.py [-v] [-m {photo,video}]
-   ```
+  
 
    - Use the `-v` or `--verbose` flag for verbose logging.
    - Use the `-m` or `--media` flag to specify whether to capture a 'photo' or 'video' (default is 'photo').
@@ -61,7 +59,6 @@ Special thanks to the Android community and contributors for inspiration and use
 
 Feel free to contribute to this project or report any issues you encounter. Enjoy optimizing your Android device and capturing great moments!
 
-```
 
 Please make sure to replace `script_name.py` with the actual name of your Python script. You can also replace the `LICENSE` section with the appropriate license information if needed.
 
