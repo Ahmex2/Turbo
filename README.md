@@ -37,5 +37,3 @@ Turbo.py is an open-source project, and we welcome contributions from the commun
 
 Turbo.py is distributed under the MIT License. Check the `LICENSE` file for more details.
 ```
-
-In this simplified version, we've focused on providing key information such as the script's purpose, features, usage, and how to contribute. You can include this in your project's repository on GitHub.
