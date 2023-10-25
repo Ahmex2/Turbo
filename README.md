@@ -13,11 +13,11 @@
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/yourusername/turbo.py.git`
+1. Clone the repository: `git clone https://github.com/Ahmex2/Turbo`
 2. Navigate to the project directory: `cd turbo.py`
 3. Execute Turbo.py: `python turbo.py`
 
-For detailed installation and usage instructions, please refer to the [official documentation](https://link-to-documentation).
+For detailed installation and usage instructions, please refer to the ReadMe : 
 
 ## Usage
 
