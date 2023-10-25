@@ -1,198 +1,100 @@
+import subprocess
 import argparse
 import logging
-import subprocess
 
-# Define the paths for performance optimization
-WINDOW_ANIMATION_SCALE_PATH = "0.0"  # Set animation scales to 0 for faster performance
-TRANSITION_ANIMATION_SCALE_PATH = "0.0"
-ANIMATOR_DURATION_SCALE_PATH = "0.0"
-DROP_CACHES_PATH = "/proc/sys/vm/drop_caches"
-CPUGOV_PATH = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
-DISPLAY_SIZE_PATH = "/settings/system/pointer_speed"
-DISPLAY_DENSITY_PATH = "/settings/system/font_scale"
-GAME_MODE_PATH = "/settings/system/game_mode"
+# Constants for package names and URLs
+PACKAGES = ['python', 'git', 'tsu', 'adb']
+TURBO_REPO = 'https://github.com/fkpwolf/turbo'
 
-# Define the package name for the cooling app
-COOLING_APP_PACKAGE = "com.example.coolingapp"
+# Constants for device optimization settings
+SETTINGS = {
+    'window_animation_scale': '0.0',
+    'transition_animation_scale': '0.0',
+    'animator_duration_scale': '0.0',
+    'wifi_scan_throttle_enabled': '0',
+    'wifi_scan_interval': '180000',
+    'wifi_idle_ms': '1800000',
+}
 
-def adb_shell(command):
-    """Execute an adb shell command"""
+def execute_adb_command(command):
+    """Execute an adb shell command."""
     try:
-        subprocess.check_call(['adb', 'devices'])
-        subprocess.check_call(['adb', 'shell'] + command.split())
+        subprocess.run(['adb', 'devices'], check=True)
+        subprocess.run(['adb', 'shell', command], shell=True, check=True)
         logging.info(f"Executed command '{command}' successfully")
     except subprocess.CalledProcessError as error:
         logging.error(f"Error executing command '{command}': {error}")
 
-def install_dependencies():
-    """Install necessary dependencies"""
+def install_package(package_name):
+    """Install a package using adb."""
     try:
-        subprocess.check_call(['pkg', 'install', 'python', 'git', 'tsu'])
-        subprocess.check_call(['pkg', 'install', 'adb'])
+        subprocess.run(['adb', 'shell', 'pm', 'install', package_name], check=True)
+        logging.info(f"Installed package '{package_name}' successfully.")
+        return True
     except subprocess.CalledProcessError as error:
-        logging.error(f"Error installing dependencies: {error}")
+        logging.error(f"Error installing package '{package_name}': {error}")
         return False
-    return True
 
 def enable_usb_debugging():
-    """Enable USB debugging"""
+    """Enable USB debugging."""
     try:
-        adb_shell("settings put global adb_enabled 1")
+        execute_adb_command("settings put global adb_enabled 1")
+        logging.info("USB debugging enabled successfully.")
+        return True
     except subprocess.CalledProcessError as error:
         logging.error(f"Error enabling USB debugging: {error}")
         return False
-    return True
 
 def install_turbo_script():
-    """Install the Turbo script"""
+    """Install and execute the Turbo script for performance."""
     try:
-        subprocess.check_call(['git', 'clone', 'https://github.com/fkpwolf/turbo'])
-        subprocess.check_call(['chmod', '+x', './turbo/turbo.sh'])
-        adb_shell("tsudo ./turbo/turbo.sh")
+        execute_adb_command(f"git clone {TURBO_REPO}")
+        execute_adb_command("chmod +x ./turbo/turbo.sh")
+        execute_adb_command("tsudo ./turbo/turbo.sh")
+        logging.info("Turbo script installed and executed successfully.")
+        return True
     except subprocess.CalledProcessError as error:
         logging.error(f"Error installing Turbo: {error}")
         return False
-    return True
 
-def disable_system_animations():
-    """Disable system animations"""
-    adb_shell(f"settings put global {WINDOW_ANIMATION_SCALE_PATH}")
-    adb_shell(f"settings put global {TRANSITION_ANIMATION_SCALE_PATH}")
-    adb_shell(f"settings put global {ANIMATOR_DURATION_SCALE_PATH}")
-
-def set_charging_speed():
-    """Set charging speed to maximum (Universal)"""
+def optimize_device():
+    """Optimize the device for better performance and stability."""
     try:
-        # Check if the device is charging
-        output = subprocess.check_output(['adb', 'shell', 'dumpsys', 'battery'])
-        if "status: charging" in output.decode():
-            # Set charging speed to maximum (Universal)
-            adb_shell("su -c 'echo 1 > /sys/class/power_supply/*/input_current_limit'")
-            logging.info("Charging speed set to maximum.")
-        else:
-            logging.warning("Device is not charging.")
+        for setting, value in SETTINGS.items():
+            execute_adb_command(f"settings put global {setting} {value}")
+
+        execute_adb_command("echo 1 > /sys/class/kgsl/kgsl-3d0/min_pwrlevel")
+        execute_adb_command("echo 1 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel")
+        execute_adb_command("echo 20000000 > /sys/class/kgsl/kgsl-3d0/devfreq/adreno_min_freq")
+        execute_adb_command("echo 50000000 > /sys/class/kgsl/kgsl-3d0/devfreq/adreno_max_freq")
+        logging.info("Device optimization complete.")
     except subprocess.CalledProcessError as error:
-        logging.error(f"Error setting charging speed: {error}")
-
-def set_cpu_governor():
-    """Set CPU governor to performance"""
-    adb_shell(f"echo performance > {CPUGOV_PATH}")
-
-def optimize_memory():
-    """Optimize memory"""
-    adb_shell("sync")
-    adb_shell(f"echo 3 > {DROP_CACHES_PATH}")
-
-def adjust_display_settings():
-    """Adjust display settings"""
-    adb_shell(f"settings put system {DISPLAY_SIZE_PATH} -3")
-    adb_shell(f"settings put system {DISPLAY_DENSITY_PATH} 1.0")
-
-def enable_game_mode():
-    """Enable game mode"""
-    adb_shell(f"settings put system {GAME_MODE_PATH} 1")
-
-def start_cooling_app():
-    """Start the cooling app"""
-    try:
-        subprocess.check_call(['adb', 'shell', 'am', 'start', '-n', f"{COOLING_APP_PACKAGE}/.MainActivity"])
-        logging.info("Cooling app started.")
-    except subprocess.CalledProcessError as error:
-        logging.error(f"Error starting cooling app: {error}")
-
-def capture_media(media_type):
-    """Capture media (photo or video) using the camera"""
-    try:
-        if media_type == "photo":
-            subprocess.check_call(['adb', 'shell', 'am', 'start', '-a', 'android.media.action.IMAGE_CAPTURE'])
-            logging.info("Camera app started for photo capture.")
-        elif media_type == "video":
-            subprocess.check_call(['adb', 'shell', 'am', 'start', '-a', 'android.media.action.VIDEO_CAPTURE'])
-            logging.info("Camera app started for video capture.")
-        else:
-            logging.warning("Invalid media type. Use 'photo' or 'video'.")
-    except subprocess.CalledProcessError as error:
-        logging.error(f"Error starting camera app for media capture: {error}")
-
-def adjust_screen_brightness(brightness_level):
-    """Adjust screen brightness"""
-    adb_shell(f"settings put system screen_brightness {brightness_level}")
-
-def disable_background_app_refresh():
-    """Disable background app refresh"""
-    adb_shell("settings put global app_background_process_limit 0")
-
-def enable_battery_saver_mode():
-    """Enable battery saver mode"""
-    adb_shell("settings put global low_power 1")
-
-def restrict_app_background_data(package_name):
-    """Restrict app background data"""
-    adb_shell(f"cmd appops set {package_name} RUN_IN_BACKGROUND deny")
+        logging.error(f"Error optimizing device: {error}")
 
 def main():
-    """Main function"""
-    # Set up argument parser
-    parser = argparse.ArgumentParser(description="Optimize Android device and capture media (photo or video).")
-    parser.add_argument('-v', '--verbose', action='store_true', help="enable verbose logging")
-    parser.add_argument('-m', '--media', choices=['photo', 'video'], default='photo', help="capture 'photo' or 'video'")
+    """Main function for Android optimization."""
+    parser = argparse.ArgumentParser(description="Optimize Android device for better performance and stability.")
+    parser.add_argument('-v', '--verbose', action='store_true', help="Enable verbose logging")
     args = parser.parse_args()
+    log_level = logging.DEBUG if args.verbose else logging.INFO
+    logging.basicConfig(filename='android_optimization.log', format='%(levelname)s: %(message)s', level=log_level)
 
-    # Set up logging
-    logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG if args.verbose else logging.INFO)
+    # Check and install required packages
+    for package in PACKAGES:
+        if not install_package(package):
+            logging.error(f"Aborting due to missing dependency: {package}")
+            return
 
-    # Install dependencies
-    if not install_dependencies():
-        logging.error("Aborting due to missing dependencies.")
-        return
-
-    # Enable USB debugging
     if not enable_usb_debugging():
         logging.error("Aborting due to USB debugging error.")
         return
 
-    # Install Turbo script
     if not install_turbo_script():
         logging.error("Aborting due to Turbo installation error.")
         return
 
-    # Disable system animations
-    disable_system_animations()
-
-    # Set charging speed to maximum (Universal)
-    set_charging_speed()
-
-    # Set CPU governor to performance
-    set_cpu_governor()
-
-    # Optimize memory
-    optimize_memory()
-
-    # Adjust display settings
-    adjust_display_settings()
-
-    # Enable game mode
-    enable_game_mode()
-
-    # Start the cooling app
-    start_cooling_app()
-
-    # Capture media (photo or video)
-    capture_media(args.media)
-
-    # Adjust screen brightness (Please replace '<brightness_level>' with an appropriate value)
-    adjust_screen_brightness(100)
-
-    # Disable background app refresh
-    disable_background_app_refresh()
-
-    # Enable battery saver mode
-    enable_battery_saver_mode()
-
-    # Restrict app background data (Please replace '<package_name>' with the appropriate package name)
-    restrict_app_background_data("com.example.someapp")
-
-    logging.info("Optimization and media capture complete.")
+    optimize_device()
+    logging.info("Optimization complete.")
 
 if __name__ == '__main__':
     main()
