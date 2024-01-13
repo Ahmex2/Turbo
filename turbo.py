@@ -1,142 +1,56 @@
-import subprocess
-import argparse
-import logging
+# Android Device Optimization Script
 
-# List of packages to be installed
-PACKAGES = ['python', 'git', 'tsu', 'adb', 'com.termux']
+## Overview
 
-# URL for the Turbo script repository
-TURBO_REPO = 'https://github.com/fkpwolf/turbo'
+This Python script optimizes an Android device for better performance and stability. It achieves this by installing necessary packages, enabling USB debugging, and executing various optimization commands, including applying settings to improve CPU performance and adjusting screen brightness.
 
-# Settings to optimize device performance
-SETTINGS = {
-    'window_animation_scale': '0.0',
-    'transition_animation_scale': '0.0',
-    'animator_duration_scale': '0.0',
-    'wifi_scan_throttle_enabled': '1',
-    'wifi_scan_interval': '300000',
-    'wifi_idle_ms': '1800000',
-    'min_processor': '50',
-    'max_processor': '100',
-}
+## Usage
 
-# Additional settings to further optimize device performance
-ADDITIONAL_SETTINGS = {
-    'force_hw_ui': 'true',
-    'force_gpu_rendering': 'true',
-    'force_4x_msaa': 'true',
-    'lock_profiling': '1',
-    'lock_resizing': '1',
-    'lock_resizing_window': '1',
-    'lock_freeform_window_management': '1',
-    'wifi.supplicant_scan_interval': '180',
-    'debug.enabletr=true': 'true',
-    'video.accelerate.hw': 'true',      
-    'audio.mixer': 'true',
-  
-}
+1. **Prerequisites**
+   - Ensure that your Android device is connected to the computer via USB.
+   - USB debugging must be enabled on your device.
 
-# Function to execute ADB commands with improved error handling and feedback
-def execute_adb_command(command):
-    try:
-        adb_devices = subprocess.run(['adb', 'devices'], capture_output=True, text=True, check=True)
-        if 'device' in adb_devices.stdout:
-            subprocess.run(['adb', 'shell', command], shell=True, check=True)
-            logging.info(f"Successfully executed the command: '{command}'")
-        else:
-            logging.error("No devices found. Please connect your device and enable USB debugging.")
-    except subprocess.CalledProcessError as error:
-        logging.error(f"Encountered an error executing the command '{command}': {error}")
+2. **Script Execution**
+   - Run the script directly using Python: `python script_name.py`
 
-# Function to install a package via ADB
-def install_package(package_name):
-    try:
-        subprocess.run(['adb', 'shell', 'pm', 'install', package_name], check=True)
-        logging.info(f"Successfully installed the package: '{package_name}'")
-        return True
-    except subprocess.CalledProcessError as error:
-        logging.error(f"Encountered an error installing the package '{package_name}': {error}")
-        return False
+3. **Command-line Options**
+   - `-v` or `--verbose`: Enable verbose logging for detailed information.
 
-# Function to enable USB debugging
-def enable_usb_debugging():
-    try:
-        execute_adb_command("settings put global adb_enabled 1")
-        logging.info("USB debugging successfully enabled")
-        return True
-    except subprocess.CalledProcessError as error:
-        logging.error(f"Encountered an error enabling USB debugging: {error}")
-        return False
+## Script Components
 
-# Function to install the Turbo script
-def install_turbo_script():
-    try:
-        execute_adb_command(f"git clone {TURBO_REPO}")
-        execute_adb_command("chmod +x ./turbo/turbo.sh")
-        execute_adb_command("tsudo ./turbo/turbo.sh")
-        logging.info("Turbo script installed and executed successfully")
-        return True
-    except subprocess.CalledProcessError as error:
-        logging.error(f"Encountered an error installing Turbo: {error}")
-        return False
+### Packages to be Installed
+- List of packages: `com.termux`
 
-# Function to optimize device settings
-def optimize_device():
-    try:
-        # Apply the settings to optimize device performance
-        for setting, value in SETTINGS.items():
-            execute_adb_command(f"settings put global {setting} {value}")
+### Turbo Script Repository
+- Turbo script repository: [Turbo Repository](https://github.com/fkpwolf/turbo)
 
-        logging.info("Device optimization completed successfully")
-    except subprocess.CalledProcessError as error:
-        logging.error(f"Encountered an error optimizing the device: {error}")
+### Device Performance Optimization Settings
+- General settings to optimize performance.
+- Additional settings for further optimization.
 
-# Function to apply additional device-specific settings
-def additional_device_settings():
-    try:
-        # Apply additional settings for further device optimization
-        for setting, value in ADDITIONAL_SETTINGS.items():
-            execute_adb_command(f"settings put global {setting} {value}")
+### ADB Command Execution Functions
+1. **execute_adb_command(command)**
+   - Executes ADB commands with improved error handling.
 
-        logging.info("Additional device-specific settings applied successfully")
-    except subprocess.CalledProcessError as error:
-        logging.error(f"Encountered an error applying additional device settings: {error}")
+2. **optimize_cpu_frequency()**
+   - Optimizes CPU frequency for improved performance.
 
-# Main function to run the optimization process
-def main():
-    # Parse command-line arguments
-    parser = argparse.ArgumentParser(description="Optimize Android device for better performance and stability")
-    parser.add_argument('-v', '--verbose', action='store_true', help="Enable verbose logging")
-    args = parser.parse_args()
-    
-    # Set logging level based on the provided argument
-    log_level = logging.DEBUG if args.verbose else logging.INFO
-    logging.basicConfig(filename='android_optimization.log', format='%(levelname)s: %(message)s', level=log_level)
+3. **adjust_screen_brightness()**
+   - Adjusts screen brightness for better visibility.
 
-    # Install required packages with improved error handling
-    for package in PACKAGES:
-        if not install_package(package):
-            logging.error(f"Aborting due to a missing dependency: {package}")
-            return
+### Main Functionality
+- Parses command-line arguments for verbose logging.
+- Installs required packages with improved error handling.
+- Enables USB debugging with improved error handling.
+- Installs Turbo script with improved error handling.
+- Optimizes CPU frequency and adjusts screen brightness.
+- Logs all actions and errors in 'android_optimization.log'.
 
-    # Enable USB debugging with improved error handling
-    if not enable_usb_debugging():
-        logging.error("Aborting due to USB debugging error")
-        return
+## Example Usage
+```bash
+python android_optimization_script.py -v
+```
 
-    # Install Turbo script with improved error handling
-    if not install_turbo_script():
-        logging.error("Aborting due to Turbo installation error")
-        return
-      
-    # Optimize device settings
-    optimize_device()
+Note: Ensure that ADB (Android Debug Bridge) is installed and available in the system's PATH.
 
-    # Apply additional device-specific settings
-    additional_device_settings()
-
-    logging.info("Optimization process completed")
-
-# Execute the main function when the script is run directly
-if __name__ == '__main__':
-    main()
+For detailed logs, refer to 'android_optimization.log' in the script directory.
