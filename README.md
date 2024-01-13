@@ -1,58 +1,54 @@
-#Turbo.py 
-
 # Android Device Optimization Script
-
-This Python script automates the process of optimizing an Android device's performance and stability using ADB commands and the Turbo script repository.
 
 ## Overview
 
-The script facilitates the optimization process by:
-
-- **Installing Essential Packages:** Installs necessary packages (`python`, `git`, `tsu`, `adb`, `com.termux`) on the connected Android device.
-- **Enabling USB Debugging:** Ensures smooth execution by enabling USB debugging to execute ADB commands seamlessly.
-- **Utilizing Turbo Script:** Clones the Turbo script repository and executes it on the device to further enhance performance.
-- **Optimizing Device Settings:** Sets device configurations for improved performance by modifying various settings related to animations, Wi-Fi, processor scaling, and more.
-
-## Requirements
-
-- Python 3.x
-- ADB (Android Debug Bridge)
-- Termux (or a similar terminal emulator for Android)
+This Python script optimizes an Android device for better performance and stability. It achieves this by installing necessary packages, enabling USB debugging, and executing various optimization commands, including applying settings to improve CPU performance and adjusting screen brightness.
 
 ## Usage
 
-1. **Setup:**
-    - Connect your Android device to the computer via USB.
-    - Ensure USB debugging is enabled on the device.
+1. **Prerequisites**
+   - Ensure that your Android device is connected to the computer via USB.
+   - USB debugging must be enabled on your device.
 
-2. **Execution:**
-    - Clone or download this repository onto your computer.
-    - Navigate to the script directory in your terminal.
+2. **Script Execution**
+   - Run the script directly using Python: `python script_name.py`
 
-3. **Run the Script:**
-    ```
-    python android_optimization.py [-v | --verbose]
-    ```
+3. **Command-line Options**
+   - `-v` or `--verbose`: Enable verbose logging for detailed information.
 
-    **Optional Arguments:**
-    - `-v, --verbose`: Enable verbose logging for detailed output.
+## Script Components
 
-## Troubleshooting
+### Packages to be Installed
+- List of packages: `com.termux`
 
-- **Device Connection:** Ensure the device is correctly connected and USB debugging is enabled.
-- **Error Logs:** Check the logs (`android_optimization.log`) for installation errors or missing dependencies.
-- **Package Availability:** Verify the availability of necessary packages on the device for successful execution.
+### Turbo Script Repository
+- Turbo script repository: [Turbo Repository](https://github.com/fkpwolf/turbo)
 
-## Disclaimer
+### Device Performance Optimization Settings
+- General settings to optimize performance.
+- Additional settings for further optimization.
 
-This script alters device settings and installs packages. Use it cautiously and review the code before execution.
+### ADB Command Execution Functions
+1. **execute_adb_command(command)**
+   - Executes ADB commands with improved error handling.
 
-## Contributing
+2. **optimize_cpu_frequency()**
+   - Optimizes CPU frequency for improved performance.
 
-Contributions, issues, and feature requests are welcome. Feel free to open an issue or submit a pull request.
+3. **adjust_screen_brightness()**
+   - Adjusts screen brightness for better visibility.
 
-## License
+### Main Functionality
+- Parses command-line arguments for verbose logging.
+- Installs required packages with improved error handling.
+- Enables USB debugging with improved error handling.
+- Installs Turbo script with improved error handling.
+- Optimizes CPU frequency and adjusts screen brightness.
+- Logs all actions and errors in 'android_optimization.log'.
 
-This project is licensed under the [MIT License](LICENSE).
+## Example Usage
+```bash
+python turbo.py -v
+```
 
----
+Note: Ensure that ADB (Android Debug Bridge) is installed and available in the system's PATH.
