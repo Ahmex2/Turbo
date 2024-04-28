@@ -15,7 +15,7 @@ This Python script is designed to optimize the performance of Android devices by
 1. Ensure that Termux is installed on your Android device.
 2. Run the script using Termux to apply the optimizations.
    ```bash
-   python optimize_android.py
+   python Turbo.py
    ```
 3. Check the log file (`android_optimization.log`) for details on the optimization process and any encountered errors.
 
