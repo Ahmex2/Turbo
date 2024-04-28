@@ -1,54 +1,33 @@
-# Android Device Optimization Script
+# Android System Optimization Script
 
-## Overview
+This Python script is designed to optimize the performance of Android devices by applying various system optimizations. It targets areas such as CPU performance, additional system settings, camera processing capabilities, game mode activation, RAM cleaning, network settings, and temperature management.
 
-This Python script optimizes an Android device for better performance and stability. It achieves this by installing necessary packages, enabling USB debugging, and executing various optimization commands, including applying settings to improve CPU performance and adjusting screen brightness.
+## Features
+- **CPU Performance Optimization:** Sets the CPU governor to 'interactive' permanently for improved system responsiveness.
+- **Additional System Optimizations:** Applies additional settings permanently to optimize system performance, including window animation scale, processor utilization, UI rendering, and more.
+- **Camera Processing Enhancement:** Enhances camera processing capabilities to mimic those of the Samsung Galaxy S24 Ultra.
+- **Game Mode Activation:** Activates game mode permanently to eliminate dropped frames during gaming sessions.
+- **Automatic RAM Cleaning:** Enables automatic RAM cleaning to prevent lag by dropping caches.
+- **Network Settings Optimization:** Optimizes network settings permanently for improved network performance.
+- **Temperature Management:** Ensures low temperature permanently to prevent overheating issues.
 
-## Usage
+## How to Use
+1. Ensure that Termux is installed on your Android device.
+2. Run the script using Termux to apply the optimizations.
+   ```bash
+   python optimize_android.py
+   ```
+3. Check the log file (`android_optimization.log`) for details on the optimization process and any encountered errors.
 
-1. **Prerequisites**
-   - Ensure that your Android device is connected to the computer via USB.
-   - USB debugging must be enabled on your device.
+## Notes
+- This script may require root access to execute certain optimizations effectively.
+- Use this script at your own risk. While it aims to enhance system performance, it may not be suitable for all devices and configurations.
 
-2. **Script Execution**
-   - Run the script directly using Python: `python script_name.py`
+## Dependencies
+- Python 3.x
+- Termux (with termux-exec package installed)
 
-3. **Command-line Options**
-   - `-v` or `--verbose`: Enable verbose logging for detailed information.
+## Author
+- [Ahmed-Sand](https://github.com/Ahmex2)
 
-## Script Components
-
-### Packages to be Installed
-- List of packages: `com.termux`
-
-### Turbo Script Repository
-- Turbo script repository: [Turbo Repository](https://github.com/fkpwolf/turbo)
-
-### Device Performance Optimization Settings
-- General settings to optimize performance.
-- Additional settings for further optimization.
-
-### ADB Command Execution Functions
-1. **execute_adb_command(command)**
-   - Executes ADB commands with improved error handling.
-
-2. **optimize_cpu_frequency()**
-   - Optimizes CPU frequency for improved performance.
-
-3. **adjust_screen_brightness()**
-   - Adjusts screen brightness for better visibility.
-
-### Main Functionality
-- Parses command-line arguments for verbose logging.
-- Installs required packages with improved error handling.
-- Enables USB debugging with improved error handling.
-- Installs Turbo script with improved error handling.
-- Optimizes CPU frequency and adjusts screen brightness.
-- Logs all actions and errors in 'android_optimization.log'.
-
-## Example Usage
-```bash
-python turbo.py -v
-```
-
-Note: Ensure that ADB (Android Debug Bridge) is installed and available in the system's PATH.
+Feel free to contribute to this project by suggesting improvements or additional optimizations. Thank you for using Android System Optimization Script!
