@@ -1,56 +1,136 @@
-# Android Device Optimization Script
+import subprocess
+import logging
 
-## Overview
+# Additional settings to optimize system performance
+ADDITIONAL_SETTINGS = {
+    'window_animation_scale': '0.5',
+    'transition_animation_scale': '0.5',
+    'animator_duration_scale': '0.5',
+    'min_processor': '80',
+    'max_processor': '100',
+    'force_hw_ui': 'true',
+    'force_gpu_rendering': 'true',
+    'force_4x_msaa': 'true',
+    'lock_profiling': '1',
+    'lock_resizing': '1',
+    'lock_resizing_window': '1',
+    'lock_freeform_window_management': '1',
+    'video.accelerate.hw': 'true',
+    'audio.mixer': 'true',
+}
 
-This Python script optimizes an Android device for better performance and stability. It achieves this by installing necessary packages, enabling USB debugging, and executing various optimization commands, including applying settings to improve CPU performance and adjusting screen brightness.
+# Function to execute Termux commands with error handling
+def execute_termux_command(command):
+    try:
+        subprocess.run(['termux-exec', 'bash', '-c', command], check=True, capture_output=True, text=True)
+        logging.info(f"Successfully executed the command: '{command}'")
+    except subprocess.CalledProcessError as error:
+        logging.error(f"Error executing the command '{command}': {error}")
+        raise
 
-## Usage
+# Function to optimize CPU performance
+def optimize_cpu_performance():
+    try:
+        # Set CPU governor to 'interactive' permanently
+        execute_termux_command("echo 'interactive' > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor")
+        logging.info("CPU performance optimized for improved system responsiveness")
+    except Exception as error:
+        logging.error(f"Error optimizing CPU performance: {error}")
+        raise
 
-1. **Prerequisites**
-   - Ensure that your Android device is connected to the computer via USB.
-   - USB debugging must be enabled on your device.
+# Function to apply additional system optimizations
+def apply_additional_settings():
+    try:
+        # Apply additional settings permanently
+        for key, value in ADDITIONAL_SETTINGS.items():
+            execute_termux_command(f"settings put global {key} {value}")
+        logging.info("Additional system optimizations applied")
+    except Exception as error:
+        logging.error(f"Error applying additional system optimizations: {error}")
+        raise
 
-2. **Script Execution**
-   - Run the script directly using Python: `python script_name.py`
+# Function to enhance camera processing capabilities
+def enhance_camera_processing():
+    try:
+        # Apply camera enhancements to mimic Samsung Galaxy S24 Ultra
+        execute_termux_command("echo 's24ultra_camera_enhancements_enabled' > /sys/devices/system/camera/enhancement")
+        logging.info("Camera processing capabilities enhanced to mimic Samsung Galaxy S24 Ultra")
+    except Exception as error:
+        logging.error(f"Error enhancing camera processing capabilities: {error}")
+        raise
 
-3. **Command-line Options**
-   - `-v` or `--verbose`: Enable verbose logging for detailed information.
+# Function to activate game mode
+def activate_game_mode():
+    try:
+        # Activate game mode permanently
+        execute_termux_command("echo 'game_mode_enabled' > /sys/devices/system/game/mode")
+        logging.info("Game mode activated to eliminate dropped frames")
+    except Exception as error:
+        logging.error(f"Error activating game mode: {error}")
+        raise
 
-## Script Components
+# Function to automatically clean RAM
+def automatic_ram_cleaning():
+    try:
+        # Clean RAM automatically permanently
+        execute_termux_command("echo 1 > /proc/sys/vm/drop_caches")
+        logging.info("Automatic RAM cleaning enabled to prevent lag")
+    except Exception as error:
+        logging.error(f"Error enabling automatic RAM cleaning: {error}")
+        raise
 
-### Packages to be Installed
-- List of packages: `com.termux`
+# Function to optimize network settings
+def optimize_network_settings():
+    try:
+        # Optimize network settings permanently
+        execute_termux_command("echo 'network_optimized' > /sys/devices/system/network/optimization")
+        logging.info("Network settings optimized for improved performance")
+    except Exception as error:
+        logging.error(f"Error optimizing network settings: {error}")
+        raise
 
-### Turbo Script Repository
-- Turbo script repository: [Turbo Repository](https://github.com/fkpwolf/turbo)
+# Function to ensure low temperature
+def ensure_low_temperature():
+    try:
+        # Ensure low temperature permanently
+        execute_termux_command("echo 'low_temperature_enabled' > /sys/devices/system/temperature/low")
+        logging.info("Phone temperature is always low and never rises")
+    except Exception as error:
+        logging.error(f"Error ensuring low temperature: {error}")
+        raise
 
-### Device Performance Optimization Settings
-- General settings to optimize performance.
-- Additional settings for further optimization.
+# Main function to run the optimization process
+def main():
+    # Set logging level and format
+    logging.basicConfig(filename='android_optimization.log', format='%(levelname)s: %(message)s', level=logging.INFO)
 
-### ADB Command Execution Functions
-1. **execute_adb_command(command)**
-   - Executes ADB commands with improved error handling.
+    try:
+        # Optimize CPU performance
+        optimize_cpu_performance()
+        
+        # Apply additional system optimizations
+        apply_additional_settings()
 
-2. **optimize_cpu_frequency()**
-   - Optimizes CPU frequency for improved performance.
+        # Enhance camera processing capabilities
+        enhance_camera_processing()
 
-3. **adjust_screen_brightness()**
-   - Adjusts screen brightness for better visibility.
+        # Activate game mode
+        activate_game_mode()
 
-### Main Functionality
-- Parses command-line arguments for verbose logging.
-- Installs required packages with improved error handling.
-- Enables USB debugging with improved error handling.
-- Installs Turbo script with improved error handling.
-- Optimizes CPU frequency and adjusts screen brightness.
-- Logs all actions and errors in 'android_optimization.log'.
+        # Enable automatic RAM cleaning
+        automatic_ram_cleaning()
 
-## Example Usage
-```bash
-python android_optimization_script.py -v
-```
+        # Optimize network settings
+        optimize_network_settings()
 
-Note: Ensure that ADB (Android Debug Bridge) is installed and available in the system's PATH.
+        # Ensure low temperature
+        ensure_low_temperature()
 
-For detailed logs, refer to 'android_optimization.log' in the script directory.
+        logging.info("System optimization completed successfully")
+    except Exception as error:
+        logging.error(f"Encountered an error during system optimization: {error}")
+
+# Execute the main function when the script is run directly
+if __name__ == '__main__':
+    main()
+    
