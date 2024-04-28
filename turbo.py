@@ -130,6 +130,7 @@ def main():
     except Exception as error:
         logging.error(f"Encountered an error during system optimization: {error}")
 
+
 # Execute the main function when the script is run directly
 if __name__ == '__main__':
     main()
