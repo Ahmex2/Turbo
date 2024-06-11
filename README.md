@@ -1,4 +1,5 @@
-# Turbo Android Device Optimization Script 📱⚡️
+# Turbo Android Device Optimization Script
+ 📱⚡️
 
 This comprehensive script optimizes various aspects of an Android device to enhance performance, improve system responsiveness, and ensure efficient resource management. Follow the detailed documentation below to understand each part of the script and how to utilize it effectively.
 
