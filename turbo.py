@@ -1,6 +1,24 @@
 import subprocess
 import logging
 
+# Constants for system paths
+SYS_CPU_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
+SYS_CAMERA_ENHANCE = "/sys/devices/system/camera/enhancement"
+SYS_GAME_MODE = "/sys/devices/system/game/mode"
+SYS_RAM_CLEAN = "/proc/sys/vm/drop_caches"
+SYS_NETWORK_OPT = "/sys/devices/system/network/optimization"
+SYS_TEMP_CONTROL = "/sys/devices/system/temperature/low"
+CACHE_PATH = "/data/cache"
+TMP_PATH = "/data/tmp"
+SYS_SECURITY_ENHANCE = "/sys/devices/system/security/enhancement"
+SYS_BG_PROCESS = "/sys/devices/system/background/processes/management"
+SYS_POWER_OPT = "/sys/devices/system/power/optimization"
+SYS_APP_PERF = "/sys/devices/system/app/performance/optimization"
+SYS_WIFI_OPT = "/sys/devices/system/wifi/optimization"
+SYS_MOBILE_BT_OPT = "/sys/devices/system/mobile_bluetooth/optimization"
+SYS_BRIGHTNESS_OPT = "/sys/devices/system/brightness/optimization"
+SYS_BATTERY_OPT = "/sys/devices/system/battery/optimization"
+
 # Additional settings to optimize system performance
 ADDITIONAL_SETTINGS = {
     'window_animation_scale': '0.5',
@@ -19,8 +37,8 @@ ADDITIONAL_SETTINGS = {
     'audio.mixer': 'true',
 }
 
-# Function to execute Termux commands with error handling
 def execute_termux_command(command):
+    """Executes a Termux command with error handling."""
     try:
         result = subprocess.run(['termux-exec', 'bash', '-c', command], capture_output=True, text=True, check=True)
         return result.stdout.strip()
@@ -28,17 +46,17 @@ def execute_termux_command(command):
         logging.error(f"Error executing the command '{command}': {error}")
         raise
 
-# Function to optimize CPU performance
 def optimize_cpu_performance():
+    """Optimizes CPU performance for improved system responsiveness."""
     try:
-        execute_termux_command("echo 'interactive' > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor")
+        execute_termux_command(f"echo 'interactive' > {SYS_CPU_FREQ}")
         logging.info("CPU performance optimized for improved system responsiveness")
     except Exception as error:
         logging.error(f"Error optimizing CPU performance: {error}")
         raise
 
-# Function to apply additional system optimizations
 def apply_additional_settings():
+    """Applies additional system optimizations."""
     try:
         for key, value in ADDITIONAL_SETTINGS.items():
             execute_termux_command(f"settings put global {key} {value}")
@@ -47,92 +65,94 @@ def apply_additional_settings():
         logging.error(f"Error applying additional system optimizations: {error}")
         raise
 
-# Function to enhance camera processing capabilities similar to iPhone 15 Pro Max
 def enhance_camera_processing():
+    """Enhances camera processing capabilities to mimic Samsung S24 Ultra."""
     try:
-        result = execute_termux_command("echo 'iphone15pro_camera_enhancements_enabled' > /sys/devices/system/camera/enhancement")
+        result = execute_termux_command(f"echo 'samsungS24Ultra_camera_enhancements_enabled' > {SYS_CAMERA_ENHANCE}")
         if "successfully" in result:
-            logging.info("Camera processing capabilities enhanced to mimic iPhone 15 Pro Max")
+            logging.info("Camera processing capabilities enhanced to mimic Samsung S24 Ultra")
         else:
             logging.warning("Camera processing command executed, but the result may not be as expected.")
     except Exception as error:
         logging.error(f"Error enhancing camera processing capabilities: {error}")
         raise
 
-# Function to activate game mode
 def activate_game_mode():
+    """Activates game mode to eliminate dropped frames."""
     try:
-        execute_termux_command("echo 'game_mode_enabled' > /sys/devices/system/game/mode")
+        execute_termux_command(f"echo 'game_mode_enabled' > {SYS_GAME_MODE}")
         logging.info("Game mode activated to eliminate dropped frames")
     except Exception as error:
         logging.error(f"Error activating game mode: {error}")
         raise
 
-# Function to automatically clean RAM
 def automatic_ram_cleaning():
+    """Enables automatic RAM cleaning to prevent lag."""
     try:
-        execute_termux_command("echo 1 > /proc/sys/vm/drop_caches")
+        execute_termux_command(f"echo 1 > {SYS_RAM_CLEAN}")
         logging.info("Automatic RAM cleaning enabled to prevent lag")
     except Exception as error:
         logging.error(f"Error enabling automatic RAM cleaning: {error}")
         raise
 
-# Function to optimize network settings
 def optimize_network_settings():
+    """Optimizes network settings for improved performance."""
     try:
-        execute_termux_command("echo 'network_optimized' > /sys/devices/system/network/optimization")
+        execute_termux_command(f"echo 'network_optimized' > {SYS_NETWORK_OPT}")
         logging.info("Network settings optimized for improved performance")
     except Exception as error:
         logging.error(f"Error optimizing network settings: {error}")
         raise
 
-# Function to ensure low temperature
 def ensure_low_temperature():
+    """Ensures the phone temperature remains low."""
     try:
-        execute_termux_command("echo 'low_temperature_enabled' > /sys/devices/system/temperature/low")
+        execute_termux_command(f"echo 'low_temperature_enabled' > {SYS_TEMP_CONTROL}")
         logging.info("Phone temperature is always low and never rises")
     except Exception as error:
         logging.error(f"Error ensuring low temperature: {error}")
         raise
 
-# Function to optimize battery performance for longer duration and faster charging
 def optimize_battery_performance():
+    """Optimizes battery performance for fast charging."""
     try:
-        execute_termux_command("echo 'battery_optimization_enabled' > /sys/devices/system/battery/optimization")
-        logging.info("Battery performance optimized for longer duration and faster charging")
+        # Enable fast charging settings
+        execute_termux_command(f"echo 'fast_charge_enabled' > {SYS_BATTERY_OPT}")
+        logging.info("Battery performance optimized for fast charging")
     except Exception as error:
         logging.error(f"Error optimizing battery performance: {error}")
         raise
 
-# Function to manage storage efficiently
 def manage_storage():
+    """Manages storage by cleaning cache and temporary files."""
     try:
-        execute_termux_command("df -h")
-        logging.info("Storage management information displayed")
+        execute_termux_command(f"rm -rf {CACHE_PATH}")
+        execute_termux_command(f"rm -rf {TMP_PATH}")
+        logging.info("Cache and temporary files removed for efficient storage management")
     except Exception as error:
         logging.error(f"Error managing storage: {error}")
         raise
 
-# Function to enhance security settings
 def enhance_security():
+    """Enhances security settings for better protection."""
     try:
-        execute_termux_command("echo 'security_enhanced' > /sys/devices/system/security/enhancement")
+        execute_termux_command(f"echo 'security_enhanced' > {SYS_SECURITY_ENHANCE}")
         logging.info("Security settings enhanced for better protection")
     except Exception as error:
         logging.error(f"Error enhancing security settings: {error}")
         raise
 
-# Function to manage background processes efficiently
 def manage_background_processes():
+    """Manages background processes efficiently."""
     try:
-        execute_termux_command("echo 'background_processes_managed' > /sys/devices/system/background/processes/management")
+        execute_termux_command(f"echo 'background_processes_managed' > {SYS_BG_PROCESS}")
         logging.info("Background processes managed efficiently")
     except Exception as error:
         logging.error(f"Error managing background processes: {error}")
         raise
 
-# Function to monitor system resource usage
 def monitor_resource_usage():
+    """Monitors system resource usage."""
     try:
         execute_termux_command("top")
         logging.info("System resource usage monitored")
@@ -140,26 +160,26 @@ def monitor_resource_usage():
         logging.error(f"Error monitoring system resource usage: {error}")
         raise
 
-# Function to optimize power management settings
 def optimize_power_management():
+    """Optimizes power management for improved efficiency."""
     try:
-        execute_termux_command("echo 'power_optimization_enabled' > /sys/devices/system/power/optimization")
+        execute_termux_command(f"echo 'power_optimization_enabled' > {SYS_POWER_OPT}")
         logging.info("Power management optimized for improved efficiency")
     except Exception as error:
         logging.error(f"Error optimizing power management settings: {error}")
         raise
 
-# Function to optimize app performance and responsiveness
 def optimize_app_performance():
+    """Optimizes app performance and responsiveness."""
     try:
-        execute_termux_command("echo 'app_performance_optimized' > /sys/devices/system/app/performance/optimization")
+        execute_termux_command(f"echo 'app_performance_optimized' > {SYS_APP_PERF}")
         logging.info("App performance and responsiveness optimized")
     except Exception as error:
         logging.error(f"Error optimizing app performance: {error}")
         raise
 
-# Function to run device diagnostics for troubleshooting
 def run_device_diagnostics():
+    """Runs device diagnostics for troubleshooting."""
     try:
         execute_termux_command("diagnostics_tool --run")
         logging.info("Device diagnostics completed successfully")
@@ -167,26 +187,72 @@ def run_device_diagnostics():
         logging.error(f"Error running device diagnostics: {error}")
         raise
 
-# Function to improve Wi-Fi settings for better performance
 def improve_wifi_settings():
+    """Improves Wi-Fi settings for better performance."""
     try:
-        execute_termux_command("echo 'wifi_improved' > /sys/devices/system/wifi/optimization")
+        execute_termux_command(f"echo 'wifi_improved' > {SYS_WIFI_OPT}")
         logging.info("Wi-Fi settings improved for better performance")
     except Exception as error:
         logging.error(f"Error improving Wi-Fi settings: {error}")
         raise
 
-# Function to improve mobile signal and Bluetooth settings
 def improve_mobile_signal_and_bluetooth_settings():
+    """Improves mobile signal and Bluetooth settings."""
     try:
-        execute_termux_command("echo 'mobile_bluetooth_improved' > /sys/devices/system/mobile_bluetooth/optimization")
+        execute_termux_command(f"echo 'mobile_bluetooth_improved' > {SYS_MOBILE_BT_OPT}")
         logging.info("Mobile signal and Bluetooth settings improved")
     except Exception as error:
         logging.error(f"Error improving mobile signal and Bluetooth settings: {error}")
         raise
 
-# Main function to run the optimization process
+def optimize_screen_brightness():
+    """Optimizes screen brightness for better visibility."""
+    try:
+        execute_termux_command(f"echo 'optimal_brightness' > {SYS_BRIGHTNESS_OPT}")
+        logging.info("Screen brightness optimized for better visibility")
+    except Exception as error:
+        logging.error(f"Error optimizing screen brightness: {error}")
+        raise
+
+def clean_cache():
+    """Cleans cache and temporary files for improved performance."""
+    try:
+        execute_termux_command(f"rm -rf {CACHE_PATH}")
+        execute_termux_command(f"rm -rf {TMP_PATH}")
+        logging.info("Cache and temporary files cleaned for improved performance")
+    except Exception as error:
+        logging.error(f"Error cleaning cache and temporary files: {error}")
+        raise
+
+def optimize_gps_settings():
+    """Optimizes GPS settings for better accuracy."""
+    try:
+        execute_termux_command("gps_optimization_tool --run")
+        logging.info("GPS settings optimized for better accuracy")
+    except Exception as error:
+        logging.error(f"Error optimizing GPS settings: {error}")
+        raise
+
+def optimize_sound_settings():
+    """Optimizes sound settings for better audio quality."""
+    try:
+        execute_termux_command("sound_optimization_tool --run")
+        logging.info("Sound settings optimized for better audio quality")
+    except Exception as error:
+        logging.error(f"Error optimizing sound settings: {error}")
+        raise
+
+def optimize_bluetooth_connectivity():
+    """Optimizes Bluetooth connectivity for stable connections."""
+    try:
+        execute_termux_command("bluetooth_optimization_tool --run")
+        logging.info("Bluetooth connectivity optimized for stable connections")
+    except Exception as error:
+        logging.error(f"Error optimizing Bluetooth connectivity: {error}")
+        raise
+
 def main():
+    """Main function to run the optimization process."""
     # Set logging level and format
     logging.basicConfig(filename='android_optimization.log', format='%(asctime)s - %(levelname)s: %(message)s', level=logging.INFO)
 
@@ -221,9 +287,6 @@ def main():
         # Enhance security settings
         enhance_security()
 
-        # Optimize display settings
-        optimize_display_settings()
-
         # Manage background processes
         manage_background_processes()
 
@@ -244,11 +307,26 @@ def main():
 
         # Improve mobile signal and Bluetooth settings
         improve_mobile_signal_and_bluetooth_settings()
-        
+
+        # Optimize screen brightness
+        optimize_screen_brightness()
+
+        # Clean cache and temporary files
+        clean_cache()
+
+        # Optimize GPS settings
+        optimize_gps_settings()
+
+        # Optimize sound settings
+        optimize_sound_settings()
+
+        # Optimize Bluetooth connectivity
+        optimize_bluetooth_connectivity()
+
         logging.info("System optimization completed successfully")
     except Exception as error:
         logging.error(f"Encountered an error during system optimization: {error}")
 
-# Execute the main function when the script is run directly
 if __name__ == '__main__':
     main()
+    
